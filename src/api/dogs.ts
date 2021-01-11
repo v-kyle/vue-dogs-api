@@ -14,13 +14,15 @@ interface BreedsResponse {
 
 type BreedsList = Array<string>;
 
-async function getDogs(num: number): Promise<DogsList | null> {
-  const res = await http.get<RandomDogsResponse>(`image/random/${num}`);
+async function getDogs(num: number, breed?: string): Promise<DogsList | null> {
+  const res = await http.get<RandomDogsResponse>(
+    breed ? `breed/${breed}/images/random/${num}` : `breeds/image/random/${num}`
+  );
   return res.data.status === "success" ? res.data.message : null;
 }
 
 async function getBreeds(): Promise<BreedsList | null> {
-  const res = (await http.get(`list/all`)) as { data: BreedsResponse };
+  const res = (await http.get(`breeds/list/all`)) as { data: BreedsResponse };
   const data = res.data;
 
   return data.status === "success"
