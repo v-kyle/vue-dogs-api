@@ -1,18 +1,18 @@
 <template>
-  <div class="dogs-grid">
-    <template v-for="i in dogs">
-      <img :src="i" style="width: 300px; height: 200px" :key="i" alt="dog" />
-    </template>
-  </div>
+  <ImagesGrid :items="dogs" :general-alt="'dog'" />
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import { getDogs } from '@/api/dogs';
 import { debounce } from 'lodash';
+import ImagesGrid from '@/components/ImagesGrid.vue';
+import { mapGetters } from 'vuex';
 
 export default Vue.extend({
   name: 'Home',
+
+  components: { ImagesGrid },
 
   data() {
     return {
@@ -30,9 +30,15 @@ export default Vue.extend({
     window.removeEventListener('scroll', this.debouncedScrollHandler());
   },
 
+  computed: {
+    ...mapGetters('breeds', {
+      selectedBreed: 'selectedBreed',
+    }),
+  },
+
   methods: {
     async loadDogs() {
-      const data = await getDogs(40);
+      const data = await getDogs(this.selectedBreed);
       if (data) {
         this.dogs.push(...data);
       }
@@ -52,13 +58,15 @@ export default Vue.extend({
       return debounce(this.scrollHandler, 500);
     },
   },
+
+  watch: {
+    async selectedBreed(value) {
+      const data = await getDogs(value);
+      if (data) {
+        this.dogs = [];
+        this.dogs.push(...data);
+      }
+    },
+  },
 });
 </script>
-
-<style lang="scss">
-.dogs-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 20px;
-}
-</style>

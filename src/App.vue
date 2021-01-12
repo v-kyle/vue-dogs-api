@@ -2,7 +2,7 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/breeds">Breed select</router-link> |
+      <DogsPicker @input="pickerHandler" /> |
       <router-link to="/favorites">Favorites</router-link>
     </div>
     <router-view />
@@ -10,17 +10,31 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue from 'vue';
+import DogsPicker from '@/components/DogsPicker.vue';
 
 export default Vue.extend({
-  name: "App",
+  name: 'App',
+
+  components: { DogsPicker },
+
   created() {
-    this.$store.dispatch("dogs/getAllBreeds");
-  }
+    this.$store.dispatch('breeds/loadAllBreeds');
+    this.$store.dispatch('favorites/loadSavedFavorites');
+  },
+
+  methods: {
+    pickerHandler(value: string) {
+      this.$store.dispatch('breeds/updateSelectedBreed', value);
+    },
+  },
 });
 </script>
 
 <style lang="scss">
+body {
+  margin: 0;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -34,6 +48,10 @@ export default Vue.extend({
 }
 
 #nav {
+  position: sticky;
+  top: 0;
+  background: white;
+  width: 100%;
   padding: 30px;
 
   a {
