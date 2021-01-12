@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>This is an breeds page</h1>
+    <h1>Select a breed</h1>
     <select v-model="selectedBreed">
       <option disabled value="">Choose breed</option>
       <option v-for="breed in breeds" :key="breed">{{ breed }}</option>
@@ -14,24 +14,24 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { mapGetters } from "vuex";
-import { getDogs } from "@/api/dogs";
+import Vue from 'vue';
+import { mapGetters } from 'vuex';
+import { getDogs } from '@/api/dogs';
 
 export default Vue.extend({
-  name: "Breeds",
+  name: 'Breeds',
 
   data() {
     return {
-      selectedBreed: "",
-      dogs: [] as Array<string>
+      selectedBreed: '',
+      dogs: [] as Array<string>,
     };
   },
 
   computed: {
-    ...mapGetters("dogs", {
-      breeds: "dogsBreeds"
-    })
+    ...mapGetters('dogs', {
+      breeds: 'dogsBreeds',
+    }),
   },
 
   watch: {
@@ -43,7 +43,7 @@ export default Vue.extend({
           this.dogs.push(...data);
         }
       }
-    }
-  }
+    },
+  },
 });
 </script>

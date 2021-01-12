@@ -1,43 +1,57 @@
 <template>
   <div class="dogs-grid">
     <template v-for="i in dogs">
-      <img :src="i" style="width: 300px; height: 200px" :key="i" />
+      <img :src="i" style="width: 300px; height: 200px" :key="i" alt="dog" />
     </template>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { getDogs } from "@/api/dogs";
+import Vue from 'vue';
+import { getDogs } from '@/api/dogs';
+import { debounce } from 'lodash';
 
 export default Vue.extend({
-  name: "Home",
+  name: 'Home',
 
   data() {
     return {
-      dogs: [] as Array<string>
-      test: false
+      dogs: [] as Array<string>,
     };
   },
 
   async created() {
-    window.addEventListener("scroll", () => {
-      const bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
+    window.addEventListener('scroll', this.debouncedScrollHandler());
 
-      if (bottomOfWindow) {
-        this.test = true;
-      }
-    })
-
-    const data = await getDogs(40);
-    if (data) {
-      this.dogs.push(...data);
-    }
+    await this.loadDogs();
   },
 
   beforeDestroy() {
-    window.removeEventListener("scroll", )
-  }
+    window.removeEventListener('scroll', this.debouncedScrollHandler());
+  },
+
+  methods: {
+    async loadDogs() {
+      const data = await getDogs(40);
+      if (data) {
+        this.dogs.push(...data);
+      }
+    },
+
+    async scrollHandler() {
+      const bottomOfWindow =
+        document.documentElement.scrollTop + window.innerHeight >
+        0.95 * document.documentElement.offsetHeight;
+
+      if (bottomOfWindow) {
+        await this.loadDogs();
+      }
+    },
+
+    debouncedScrollHandler() {
+      return debounce(this.scrollHandler, 500);
+    },
+  },
 });
 </script>
 
