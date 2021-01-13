@@ -1,5 +1,5 @@
 <template>
-  <select v-model="selectedBreed" class="dogs-picker">
+  <select v-model="selectedBreed" @change="updateBreed" class="dogs-picker">
     <option v-for="(breed, i) in breeds" :key="i">{{ breed }}</option>
   </select>
 </template>
@@ -24,11 +24,9 @@ export default Vue.extend({
     }),
   },
 
-  watch: {
-    async selectedBreed(value) {
-      if (value) {
-        this.$emit('input', value);
-      }
+  methods: {
+    updateBreed() {
+      this.$store.dispatch('breeds/updateSelectedBreed', this.selectedBreed);
     },
   },
 });

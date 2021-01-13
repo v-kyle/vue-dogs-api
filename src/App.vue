@@ -1,9 +1,13 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <DogsPicker @input="pickerHandler" /> |
-      <router-link to="/favorites">Favorites</router-link>
+      <router-link to="/">
+        Home
+      </router-link>
+      <DogsPicker /> |
+      <router-link to="/favorites">
+        Favorites
+      </router-link>
     </div>
     <router-view />
   </div>
@@ -21,12 +25,6 @@ export default Vue.extend({
   created() {
     this.$store.dispatch('breeds/loadAllBreeds');
     this.$store.dispatch('favorites/loadSavedFavorites');
-  },
-
-  methods: {
-    pickerHandler(value: string) {
-      this.$store.dispatch('breeds/updateSelectedBreed', value);
-    },
   },
 });
 </script>
