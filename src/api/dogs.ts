@@ -5,26 +5,22 @@ interface GetDogsResponse {
   message: Array<string>;
 }
 
-type DogsList = Array<string>;
-
 interface BreedsResponse {
   status: string;
   message: Record<string, Array<unknown>>;
 }
 
-type BreedsList = Array<string>;
+async function getDogs(breed: string, num = 40): Promise<Array<string> | null> {
+  const urlRandom = `breed/${breed}/images/random/${num}`;
+  const urlBreed = `breeds/image/random/${num}`;
+  const url = breed === 'random' ? urlBreed : urlRandom;
 
-async function getDogs(breed: string, num = 40): Promise<DogsList | null> {
-  const res = await http.get<GetDogsResponse>(
-    breed !== 'random'
-      ? `breed/${breed}/images/random/${num}`
-      : `breeds/image/random/${num}`
-  );
+  const res = await http.get<GetDogsResponse>(url);
   return res.data.status === 'success' ? res.data.message : null;
 }
 
-async function getBreeds(): Promise<BreedsList | null> {
-  const res = (await http.get(`breeds/list/all`)) as { data: BreedsResponse };
+async function getBreeds(): Promise<Array<string> | null> {
+  const res = await http.get<BreedsResponse>(`breeds/list/all`);
   const data = res.data;
 
   return data.status === 'success'
