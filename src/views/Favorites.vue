@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 import ImagesGrid from '@/components/ImagesGrid.vue';
 
 export default Vue.extend({
@@ -13,8 +13,9 @@ export default Vue.extend({
   components: { ImagesGrid },
 
   computed: {
-    ...mapGetters('favorites', {
-      dogs: 'favorites',
+    ...mapState({
+      dogs: state =>
+        (state as Record<string, Record<string, string>>).favorites.favorites,
     }),
   },
 });

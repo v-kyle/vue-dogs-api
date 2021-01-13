@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 
 export default Vue.extend({
   name: 'ImageContainer',
@@ -25,8 +25,9 @@ export default Vue.extend({
   },
 
   computed: {
-    ...mapGetters('favorites', {
-      favorites: 'favorites',
+    ...mapState({
+      favorites: state =>
+        (state as Record<string, Record<string, string>>).favorites.favorites,
     }),
 
     isFavorite(): boolean {

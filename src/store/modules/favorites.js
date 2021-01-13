@@ -4,11 +4,7 @@ const state = () => ({
   favorites: [],
 });
 
-const getters = {
-  favorites(state) {
-    return state.favorites;
-  },
-};
+const getters = {};
 
 const actions = {
   loadSavedFavorites({ commit }) {

@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 
 export default Vue.extend({
   name: 'DogsPicker',
@@ -18,8 +18,9 @@ export default Vue.extend({
   },
 
   computed: {
-    ...mapGetters('breeds', {
-      breeds: 'dogsBreeds',
+    ...mapState({
+      breeds: state =>
+        (state as Record<string, Record<string, string>>).breeds.breeds,
     }),
   },
 

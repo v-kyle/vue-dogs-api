@@ -7,7 +7,7 @@ import Vue from 'vue';
 import { getDogs } from '@/api/dogs';
 import { debounce } from 'lodash';
 import ImagesGrid from '@/components/ImagesGrid.vue';
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 
 export default Vue.extend({
   name: 'Home',
@@ -31,8 +31,9 @@ export default Vue.extend({
   },
 
   computed: {
-    ...mapGetters('breeds', {
-      selectedBreed: 'selectedBreed',
+    ...mapState({
+      selectedBreed: state =>
+        (state as Record<string, Record<string, string>>).breeds.selectedBreed,
     }),
   },
 

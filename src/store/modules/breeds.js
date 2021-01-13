@@ -5,15 +5,7 @@ const state = () => ({
   selectedBreed: 'random',
 });
 
-const getters = {
-  dogsBreeds(state) {
-    return state.breeds;
-  },
-
-  selectedBreed(state) {
-    return state.selectedBreed;
-  },
-};
+const getters = {};
 
 const actions = {
   async loadAllBreeds({ commit }) {
