@@ -1,5 +1,5 @@
 <template>
-  <div class="image-container" @click="() => clickHandler(src)">
+  <div class="image-container" @click="clickHandler">
     <img :src="src" style="width: 300px; height: 200px" :alt="generalAlt" />
     <div class="image-icon" :class="{ show: isFavorite }">❤</div>
   </div>
@@ -35,11 +35,11 @@ export default Vue.extend({
   },
 
   methods: {
-    clickHandler(src: string) {
+    clickHandler() {
       if (this.isFavorite) {
-        this.$store.dispatch('favorites/removeFromFavorites', src);
+        this.$store.dispatch('favorites/removeFromFavorites', this.src);
       } else {
-        this.$store.dispatch('favorites/addToFavorite', src);
+        this.$store.dispatch('favorites/addToFavorite', this.src);
       }
     },
   },
