@@ -53,6 +53,7 @@ body {
   background: white;
   width: 100%;
   padding: 30px;
+  z-index: 1000;
 
   a {
     font-weight: bold;

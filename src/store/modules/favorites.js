@@ -35,11 +35,13 @@ const mutations = {
     saveFavorites(state.favorites);
   },
 
-  /*removeFromFavorites(state, src) {
-    const imgIndex = state.favorites.findIndex(el => el === src);
-    state.favorites = ;
+  removeFromFavorites(state, src) {
+    const index = state.favorites.indexOf(src);
+    if (index > -1) {
+      state.favorites.splice(index, 1);
+    }
     saveFavorites(state.favorites);
-  },*/
+  },
 };
 
 export default {
