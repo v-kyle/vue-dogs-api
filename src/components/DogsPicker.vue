@@ -1,5 +1,6 @@
 <template>
   <select v-model="selectedBreed" @change="updateBreed" class="dogs-picker">
+    <option>random</option>
     <option v-for="(breed, i) in breeds" :key="i">{{ breed }}</option>
   </select>
 </template>

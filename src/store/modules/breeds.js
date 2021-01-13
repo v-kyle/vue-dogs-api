@@ -10,9 +10,6 @@ const getters = {};
 const actions = {
   async loadAllBreeds({ commit }) {
     const data = await getBreeds();
-    if (data && data.length) {
-      data.push('random');
-    }
     commit('setBreeds', data && data.length ? data : []);
   },
 
