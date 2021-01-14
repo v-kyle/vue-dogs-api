@@ -33,11 +33,20 @@ export default Vue.extend({
 });
 </script>
 
-<style>
+<style lang="scss">
+@import 'src/assets/vars';
+
 .dogs-picker {
+  border-radius: 0.25rem;
   margin: 0 2px;
   font-weight: bold;
   font-size: 1rem;
   width: 165px;
+  background: $base-color;
+  padding: 0.25rem 0.5rem;
+
+  &:hover {
+    box-shadow: $base-shadow;
+  }
 }
 </style>

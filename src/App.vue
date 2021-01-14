@@ -1,26 +1,18 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">
-        Home
-      </router-link>
-      <DogsPicker /> |
-      <router-link to="/favorites">
-        Favorites
-      </router-link>
-    </div>
+    <Header />
     <router-view />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import DogsPicker from '@/components/DogsPicker.vue';
+import Header from '@/components/Header.vue';
 
 export default Vue.extend({
   name: 'App',
 
-  components: { DogsPicker },
+  components: { Header },
 
   created() {
     this.$store.dispatch('breeds/loadAllBreeds');
@@ -30,8 +22,11 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+@import 'assets/vars';
+
 body {
   margin: 0;
+  background: $base-color;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -39,27 +34,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  font-size: 16px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-#nav {
-  position: sticky;
-  top: 0;
-  background: white;
-  width: 100%;
-  padding: 30px;
-  z-index: 1000;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
 }
 </style>
