@@ -76,7 +76,7 @@ export default Vue.extend({
     border-radius: 50%;
     border: 1px solid grey;
     text-align: center;
-    line-height: 30px;
+    line-height: 33px;
     display: none;
     color: red;
     font-weight: bold;
